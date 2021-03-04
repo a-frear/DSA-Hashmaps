@@ -1,58 +1,58 @@
 const Hashmap = require('./HashMap')
 const Chainedmap = require('./chainedmap')
 
-// function main() {
-//     const lotr = new Hashmap();
-//      lotr.set('Hobbit', 'Bilbo')
-//      lotr.set('Hobbit', 'Frodo')
-//      lotr.set('Wizard', 'Gandalf')
-//      lotr.set('Elf', 'Legolas')
-//      lotr.set('Maiar', 'The Necromancer')
-//      lotr.set('Maiar', 'Sauron')
-//      lotr.set('RingBearer', 'Gollum')
-//      lotr.set('LadyOfLight', 'Galadriel')
-//      lotr.set('HalfEleven', 'Arwen')
-//      lotr.set('Ent', 'Treebeard')
-//      return lotr
-// }
+function main() {
+    const lotr = new Hashmap();
+     lotr.set('Hobbit', 'Bilbo')
+     lotr.set('Hobbit', 'Frodo')
+     lotr.set('Wizard', 'Gandalf')
+     lotr.set('Elf', 'Legolas')
+     lotr.set('Maiar', 'The Necromancer')
+     lotr.set('Maiar', 'Sauron')
+     lotr.set('RingBearer', 'Gollum')
+     lotr.set('LadyOfLight', 'Galadriel')
+     lotr.set('HalfEleven', 'Arwen')
+     lotr.set('Ent', 'Treebeard')
+     return lotr
+}
 
 
 
-// // console.log(main())
+console.log(main())
 
-// const WhatDoesThisDo = function(){
-//     let str1 = 'Hello World.';
-//     let str2 = 'Hello World.';
-//     let map1 = new Hashmap();
-//     map1.set(str1,10);
-//     map1.set(str2,20);
-//     let map2 = new Hashmap();
-//     let str3 = str1;
-//     let str4 = str2;
-//     map2.set(str3,20);
-//     map2.set(str4,10);
+const WhatDoesThisDo = function(){
+    let str1 = 'Hello World.';
+    let str2 = 'Hello World.';
+    let map1 = new Hashmap();
+    map1.set(str1,10);
+    map1.set(str2,20);
+    let map2 = new Hashmap();
+    let str3 = str1;
+    let str4 = str2;
+    map2.set(str3,20);
+    map2.set(str4,10);
 
-//     console.log(map1.get(str1));
-//     console.log(map2.get(str3));
-// }
+    console.log(map1.get(str1));
+    console.log(map2.get(str3));
+}
 
-// WhatDoesThisDo()
+WhatDoesThisDo()
 
-// 4. Remove duplicates
-// const duplicates = (s) => {
-//     const str = s
-//     const duplicate = new Hashmap();
-//     for (let i = 0; i < str.length; i++) {
-//       duplicate.set(str[i], str[i]);
-//     }
-//     let newStr = "";
-//     duplicate._hashTable.forEach((letter) => {
-//       newStr += letter.value;
-//     });
-//     console.log(newStr);
-//   };
+//Remove duplicates
+const duplicates = (s) => {
+    const str = s
+    const duplicate = new Hashmap();
+    for (let i = 0; i < str.length; i++) {
+      duplicate.set(str[i], str[i]);
+    }
+    let newStr = "";
+    duplicate._hashTable.forEach((letter) => {
+      newStr += letter.value;
+    });
+    console.log(newStr);
+  };
 
-//   duplicates("google all you can think of");
+  duplicates("google all you can think of");
 
 // 5. Any permutation a palindrome
 const isPalindrome = (str) => {
@@ -79,16 +79,16 @@ const isPalindrome = (str) => {
   }
 
   console.log('acecarr is Palindrome? ' + isPalindrome('acecarr'))
-  console.log('acecarr3 is Palindrome? ' + isPalindrome('acecarr3'))
+  console.log('amy is Palindrome? ' + isPalindrome('amy'))
 
   //this kind of works, but it has to rearrange all the letters in the words to make them the same. 
   //I haven't figured out how to keep the words the way they are
   //Example: answer is supposed to be [['east', 'teas', 'eats'], ['cars', 'arcs'], ['acre', 'race']]
   //I get: [ [ 'race', 'race' ], [ 'teas', 'teas', 'eats' ], [ 'arcs', 'arcs' ] ]
   function anagram(array) {
-    let map = new Chainedmap(); // creates a hashmap
+    let map = new Chainedmap(); // creates a chained hashmap
     const sortWords = (input) => input.split('').sort().join(''); 
-    // sorts letters inside a single word | car -> acr
+    // sorts letters inside a single word car -> acr
 
     array.forEach((word) => { // iterates through the words
       const groupWords = sortWords(word);

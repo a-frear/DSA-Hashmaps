@@ -105,4 +105,23 @@ class ChainedMap {
 ChainedMap.MAX_LOAD_RATIO = 0.5
 ChainedMap.SIZE_RATIO = 3
 
+function main() {
+    const lotr = new ChainedMap();
+     lotr.set('Hobbit', 'Bilbo')
+     lotr.set('Hobbit', 'Frodo')
+     lotr.set('Wizard', 'Gandalf')
+     lotr.set('Elf', 'Legolas')
+     lotr.set('Maiar', 'The Necromancer')
+     lotr.set('Maiar', 'Sauron')
+     lotr.set('RingBearer', 'Gollum')
+     lotr.set('LadyOfLight', 'Galadriel')
+     lotr.set('HalfEleven', 'Arwen')
+     lotr.set('Ent', 'Treebeard')
+     return lotr
+}
+
+
+
+console.log(main())
+
 module.exports = ChainedMap;
