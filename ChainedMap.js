@@ -1,5 +1,7 @@
-class HashMap{
-    constructor(initialCapacity = 8) {
+const { LinkedList, Node } = require('./LinkedList');
+
+class ChainedMap {
+  constructor(initialCapacity = 8) {
     this.length = 0;
     this._hashTable = [];
     this._capacity = initialCapacity;
@@ -9,34 +11,48 @@ class HashMap{
   get(key) {
     const index = this._findSlot(key);
     if (this._hashTable[index] === undefined) {
-      throw new Error("Key error");
+      return undefined
     }
     return this._hashTable[index].value;
   }
 
   set(key, value) {
     const loadRatio = (this.length + this._deleted + 1) / this._capacity;
-    if (loadRatio > this.MAX_LOAD_RATIO) {
-      this._resize(this._capacity * this.SIZE_RATIO);
+    if (loadRatio > ChainedMap.MAX_LOAD_RATIO) {
+      this._resize(this._capacity * ChainedMap.SIZE_RATIO);
     }
     //Find the slot where this key should be in
-    const index = this._findSlot(key);
 
+    const index = this._findSlot(key);
     if (!this._hashTable[index]) {
       this.length++;
     }
-    this._hashTable[index] = {
-      key,
-      value,
-      DELETED: false,
-    };
+
+    if (this.get(key) === undefined) {
+      this._hashTable[index] = {
+        key,
+        value,
+        DELETED: false
+      }
+    }
+    else if (typeof this.get(key) === "string") {
+      const list = new LinkedList();
+      list.insertLast({ value, DELETED: false })
+      this._hashTable[index] = {
+        key,
+        value: list
+      };
+    }
+    else {
+      this.get(key).insertLast({ value, DELETED: false })
+    }
   }
 
   delete(key) {
     const index = this._findSlot(key);
     const slot = this._hashTable[index];
     if (slot === undefined) {
-      throw new Error("Key error");
+      throw new Error('Key error');
     }
     slot.DELETED = true;
     this.length--;
@@ -44,7 +60,7 @@ class HashMap{
   }
 
   _findSlot(key) {
-    const hash = HashMap._hashString(key);
+    const hash = ChainedMap._hashString(key);
     const start = hash % this._capacity;
 
     for (let i = start; i < start + this._capacity; i++) {
@@ -77,14 +93,16 @@ class HashMap{
       //Bitwise left shift with 5 0s - this would be similar to
       //hash*31, 31 being the decent prime number
       //but bit shifting is a faster way to do this
-      //tradeoff is understandability
       hash = (hash << 5) + hash + string.charCodeAt(i);
       //converting hash to a 32 bit integer
       hash = hash & hash;
     }
-    //making sure has is unsigned - meaning non-negtive number.
+    //making sure hash is a non-negtive number. 
     return hash >>> 0;
   }
 }
 
-module.exports = HashMap
+ChainedMap.MAX_LOAD_RATIO = 0.5
+ChainedMap.SIZE_RATIO = 3
+
+module.exports = ChainedMap;
