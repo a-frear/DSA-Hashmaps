@@ -55,31 +55,58 @@ const duplicates = (s) => {
   duplicates("google all you can think of");
 
 // 5. Any permutation a palindrome
+/*
+What are qualities of a palindrome string?
+It has even number counts of characters or at most just one character with an 
+odd count. This means the string is either of even length or an odd length 
+with just exactly one character with an odd count.
+
+Since we know some basic qualities of a palindrome string, 
+we can count characters to determine if the string is a permutation of a palindrome.
+Create an array from string and loop through the array, 
+either adding the character to the hash table as a key or incrementing the count 
+(value) if it already is in the table. Characters = key and count = value.
+Iterate through the hash table to make sure character counts are all even 
+or at most one value is odd.
+Input: String
+Output: Boolean
+Constraints: Optimize
+Edge cases: empty string, spaces, more than 2 of the same char, even and odd char
+*/
+
 const isPalindrome = (str) => {
-    let map = new Hashmap();
-    for (let i = 0; i < str.length; i++) {
-      map.set(str[i], i);
+  //if the string is even: there must be two of every char
+  //if odd: there must be only one unique char
+
+  //use hash table to store letters
+  //if we see the same letter again, delete from mash table
+  //check hash table at end... if it's odd, there should only be 1 key left
+  //or no keys left if not odd
+
+  let map = new Hashmap()
+  let charCount = 0
+
+  for (let i =0; i < str; i++) {
+    console.log('string index: ' + str[i])
+    let c = str[i]
+    if (map.get(c) === undefined) {
+      map.set('c', true)
+    } else {
+      map.delete(c)
     }
-    let count = 0;
-    for (let i = 0; i < str.length; i++) {
-      if (map.get(str[i]) !== i) {
-        console.log('letter doesnt equal other letter', i, str[i], ':', map.get(str[i]))
-        count--;
-      } else {
-        console.log('letters match', i, str[i], ':', map.get(str[i]))
-        count++;
-      }
-    }
-    if (count > 1) {
-      return false;
-    }
-    else {
-      return true;
-    }
+    charCount++;
+  }
+  if (charCount % 2 === 0) {
+    console.log('map length is 0')
+    console.log(map.length)
+    return map.length === 0;
+  }
+  console.log('map length is 1')
+  return map.length === 1
   }
 
   console.log('acecarr is Palindrome? ' + isPalindrome('acecarr'))
-  console.log('amy is Palindrome? ' + isPalindrome('amy'))
+  console.log('amy is Palindrome? ' + isPalindrome('aam'))
 
   //this kind of works, but it has to rearrange all the letters in the words to make them the same. 
   //I haven't figured out how to keep the words the way they are
@@ -122,3 +149,4 @@ const isPalindrome = (str) => {
   }
 
   console.log(anagram(['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race']));
+  //preserve key and value
