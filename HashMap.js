@@ -9,7 +9,7 @@ class HashMap{
   get(key) {
     const index = this._findSlot(key);
     if (this._hashTable[index] === undefined) {
-      throw new Error("Key error");
+      return undefined;
     }
     return this._hashTable[index].value;
   }

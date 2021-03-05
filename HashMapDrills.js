@@ -68,85 +68,61 @@ either adding the character to the hash table as a key or incrementing the count
 (value) if it already is in the table. Characters = key and count = value.
 Iterate through the hash table to make sure character counts are all even 
 or at most one value is odd.
-Input: String
-Output: Boolean
-Constraints: Optimize
-Edge cases: empty string, spaces, more than 2 of the same char, even and odd char
 */
 
 const isPalindrome = (str) => {
   //if the string is even: there must be two of every char
   //if odd: there must be only one unique char
-
-  //use hash table to store letters
-  //if we see the same letter again, delete from mash table
-  //check hash table at end... if it's odd, there should only be 1 key left
-  //or no keys left if not odd
-
+ 
   let map = new Hashmap()
+  //use hash table to store letters
   let charCount = 0
+  let newStr = str.split('')
+  console.log(newStr)
 
-  for (let i =0; i < str; i++) {
-    console.log('string index: ' + str[i])
-    let c = str[i]
+  for (let i =0; i < newStr.length; i++) {
+    let c = newStr[i]
     if (map.get(c) === undefined) {
-      map.set('c', true)
+      map.set(c, true)
+      //add to hash table if key does not exist
     } else {
       map.delete(c)
+      //if we see the same letter again, delete from hash table
     }
     charCount++;
   }
   if (charCount % 2 === 0) {
+     //if the charCount is even, the hash map should be 0, which means the string is a palindrome permutation
     console.log('map length is 0')
     console.log(map.length)
     return map.length === 0;
-  }
-  console.log('map length is 1')
-  return map.length === 1
-  }
+  } else {
+    //or there should only be 1 key left in order to be a palindrome permutation
+    return map.length === 1;
+    }
+}
 
   console.log('acecarr is Palindrome? ' + isPalindrome('acecarr'))
-  console.log('amy is Palindrome? ' + isPalindrome('aam'))
+  console.log('amy is Palindrome? ' + isPalindrome('amy'))
+  console.log('kayka is Palindrome? ' + isPalindrome('kayka'))
 
-  //this kind of works, but it has to rearrange all the letters in the words to make them the same. 
-  //I haven't figured out how to keep the words the way they are
-  //Example: answer is supposed to be [['east', 'teas', 'eats'], ['cars', 'arcs'], ['acre', 'race']]
-  //I get: [ [ 'race', 'race' ], [ 'teas', 'teas', 'eats' ], [ 'arcs', 'arcs' ] ]
+  //6. Anagrams
   function anagram(array) {
-    let map = new Chainedmap(); // creates a chained hashmap
-    const sortWords = (input) => input.split('').sort().join(''); 
-    // sorts letters inside a single word car -> acr
-
-    array.forEach((word) => { // iterates through the words
-      const groupWords = sortWords(word);
-      map.set(groupWords, word); 
-      // sorted word becomes the key, with a value of [all the previous words + this new one]
-    });
-
-    const anagrams = [];
-
-    map._hashTable.forEach(hash => {
-      if (hash !== null) {
-        if (typeof hash.value === "string") {
-          anagrams.push(hash.value)
-        }
-        else {
-          const newElement = []
-          const head = hash.value.head;
-
-          newElement.push(head.data.value)
-          let currentNode = head;
-
-          while (currentNode !== null) {
-            newElement.push(currentNode.data.value)
-            currentNode = currentNode.next;
-          }
-          anagrams.push(newElement)
-        }
+    const anagramMap = new Map();
+    //create a new hash table
+    array.forEach((word) => {
+      //for each word in the array, split the letters and sort them into a new array
+      let sorted = word.split("").sort().join("");
+      if (anagramMap.has(sorted)) {
+        //if the hashmap has a key that matches the sorted array, push the word to the value
+        anagramMap.get(sorted).push(word);
+      } else {
+        anagramMap.set(sorted, [word]);
+        //if the hashamp doesn't have the key, set a new key of sorted with a value of the word
       }
-    })
-    return anagrams;
+    });
+    return [...anagramMap.values()];
+    //return the values
   }
 
   console.log(anagram(['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race']));
-  //preserve key and value
